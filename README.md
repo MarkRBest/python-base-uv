@@ -1,16 +1,27 @@
 # `uv` Python Template
 
-An alternative to the `poetry` template found [here](https://github.com/idatsy/python-base), with minimal defaults:
+Modern Python project template using [uv](https://docs.astral.sh/uv/) for easy dependency management.
 
-* Test suite using `pytest` with `pytest-asyncio` and `pytest-watcher` for TDD
-* `loguru` as the default logging solution
-* `ruff` and `pyright` configurations for formatting, with strict rules enabled by default to enforce strict typing and correctness
-* Default GitHub Actions requiring formatting, linting, and passing tests before merges into `main`
-* Makefile with shorthand commands for common tasks
+Alternative using `poetry` found [here](https://github.com/idatsy/python-base).
 
-> Run `make help` for a list of available commands.
+## Features
+
+* `pytest` with `pytest-asyncio` and `pytest-watcher` for TDD
+* `loguru` for logging
+* `ruff` and `pyright` for linting, formatting, and type checking (with strict defaults!)
+* GitHub Actions CI
 
 ## Usage
 
-Clone the repo as a template, then find and replace `python-base-uv`, and you're good to go!
+- Clone the repo
+- Find/replace `python-base-uv` with your project name
+  - Or ask copilot to change all template references as the initial commit!
 
+**Makefile**
+- `make sync` to update dependencies.
+- `make check` before committing (runs ruff and pyright)
+- `make test` to run tests.
+- `make watch` for TDD mode (auto-run tests on save).
+- `make help` for all commands.
+
+> Prefix files with `wip_` to skip linting.
