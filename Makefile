@@ -1,9 +1,8 @@
 .PHONY: help install format lint lint-fix typecheck docstring style fix \
-        check sync clean test stats watch live-stream run-client reclaim \
-        monitor monitor-charts
+        check sync clean test stats watch
 .DEFAULT_GOAL := help
 
-TEST_FLAGS := -xvv -s -p no:anchorpy
+TEST_FLAGS := -xvv -s
 
 install: ## Create / update virtual‑env with all dependency groups
 	uv sync --all-groups
@@ -31,8 +30,8 @@ fix: format lint-fix ## Run all formatters and fixers
 check: fix 	typecheck ## Run all checks (format, lint‑fix, typecheck)
 
 sync: ## Re‑lock and install latest versions
-	uv lock --upgrade       # rebuild uv.lock with newer pins
-	uv sync --all-groups    # install everything into .venv
+	uv lock --upgrade
+	uv sync --all-groups --reinstall
 
 clean: ## Remove build artefacts and caches
 	rm -rf .ruff_cache/ .mypy_cache/ .pytest_cache/ dist/ build/
@@ -55,10 +54,10 @@ stats: ## Show code quality statistics
 #   make watch path/to/file   → watch single test file
 watch:
 	@if [ -z "$(filter-out $@,$(MAKECMDGOALS))" ]; then \
-		uv run pytest-watcher . --runner "pytest tests $(TEST_FLAGS) -W ignore::DeprecationWarning"; \
+		uv run pytest-watcher . -- tests $(TEST_FLAGS) -W ignore::DeprecationWarning; \
 	else \
 		path_arg="$(filter-out $@,$(MAKECMDGOALS))"; \
-		uv run pytest-watcher . --runner "pytest src/tests/$$path_arg $(TEST_FLAGS) -W ignore::DeprecationWarning"; \
+		uv run pytest-watcher . -- tests/$$path_arg $(TEST_FLAGS) -W ignore::DeprecationWarning; \
 	fi
 
 # Pattern rule so additional args do not trigger "No rule to make target"

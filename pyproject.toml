@@ -7,7 +7,9 @@ authors = [
     { name = "idatsy", email = "stefan@ranvier.co.uk" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "loguru",
+]
 
 [project.scripts]
 python-base-uv = "python_base_uv:main"
@@ -16,14 +18,21 @@ python-base-uv = "python_base_uv:main"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
 [dependency-groups]
 dev = [
-    "pyrefly>=0.25.1",
-    "pyright>=1.1.403",
-    "pytest>=8.4.1",
-    "pytest-asyncio>=1.1.0",
-    "pytest-watcher>=0.4.3",
-    "ruff>=0.12.5",
+    "pyrefly",
+    "pyright",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-watcher",
+    "ruff",
 ]
 
 [tool.ruff]
@@ -31,17 +40,30 @@ line-length = 125
 target-version = "py313"
 
 [tool.ruff.lint]
-extend-select = ["E","W","F","I","B","C4","N","D","UP","S","ANN","ARG","ERA","ICN","PD","NPY","PT","RET","SIM","TCH"]
-ignore = ["ANN204", "C901","S608","D401","E501","D107","W291","RET503","D100","D101","D102","D103","D104","D105","S104","PD901"]
+select = ["ALL"]
+ignore = [
+    "ANN204",  # Missing return type for __init__
+    "C901",    # Too complex
+    "COM812",  # Missing trailing comma (conflicts with formatter)
+    "D100", "D101", "D102", "D103", "D104", "D105", "D107",  # Missing docstrings
+    "D401",    # First line imperative mood
+    "E501",    # Line too long (handled by formatter)
+    "ISC001",  # Single line implicit string concatenation (conflicts with formatter)
+    "RET503",  # Missing explicit return
+    "S104",    # Possible binding to all interfaces
+    "S608",    # SQL injection (too many false positives)
+    "W291",    # Trailing whitespace
+]
 fixable = ["ALL"]
 pydocstyle = { convention = "google" }
 
 [tool.ruff.lint.per-file-ignores]
 "**/wip*.py"   = ["ALL"]
-"**/tests/*"   = ["D","ANN","S","ERA"]
-"*_"           = ["D","ANN","S"]
-"wip*"         = ["D","ANN","S"]
+"**/tests/*"   = ["D", "ANN", "S", "ERA", "INP001"]
+"*_"           = ["D", "ANN", "S"]
+"wip*"         = ["D", "ANN", "S"]
 "__init__.py"  = ["D"]
+"__main__.py"  = ["T201"]  # Allow print in main entry point
 "**/gen/*"     = ["ALL"]
 "**/*.ipynb"   = ["ALL"]
 
@@ -69,7 +91,6 @@ defineConstant = { DEBUG = true }
 typeCheckingMode = "standard"
 pythonVersion = "3.13"
 pythonPlatform = "All"
-stubPath = "typings"
 reportMissingImports = "error"
 reportMissingTypeStubs = false
 reportMissingModuleSource = false
@@ -83,10 +104,3 @@ reportImportCycles = "warning"
 reportUnusedImport = "warning"
 reportUnusedVariable = "warning"
 reportDuplicateImport = "warning"
-
-[[tool.pyright.overrides]]
-pattern = ".venv/**"
-reportUnknownParameterType = "none"
-reportUnknownArgumentType = "none"
-reportUnknownMemberType = "none"
-reportMissingParameterType = "none"
