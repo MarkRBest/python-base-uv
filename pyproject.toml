@@ -61,7 +61,7 @@ max-complexity = 15
 
 [tool.ruff.lint.per-file-ignores]
 "**/wip*.py"   = ["ALL"]
-"**/tests/*"   = ["D", "ANN", "S", "ERA", "INP001"]
+"**/tests/*"   = ["D", "ANN", "S", "ERA", "INP001", "PLR2004", "SLF001", "ARG", "FBT", "PT011", "PGH004", "T201"]
 "*_"           = ["D", "ANN", "S"]
 "wip*"         = ["D", "ANN", "S"]
 "__init__.py"  = ["D"]
