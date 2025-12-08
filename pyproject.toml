@@ -43,19 +43,21 @@ target-version = "py313"
 select = ["ALL"]
 ignore = [
     "ANN204",  # Missing return type for __init__
-    "C901",    # Too complex
     "COM812",  # Missing trailing comma (conflicts with formatter)
-    "D100", "D101", "D102", "D103", "D104", "D105", "D107",  # Missing docstrings
+    "D100", "D101", "D102", "D103", "D104", "D105", "D107",  # Docstrings optional
     "D401",    # First line imperative mood
     "E501",    # Line too long (handled by formatter)
-    "ISC001",  # Single line implicit string concatenation (conflicts with formatter)
-    "RET503",  # Missing explicit return
-    "S104",    # Possible binding to all interfaces
-    "S608",    # SQL injection (too many false positives)
+    "ISC001",  # Conflicts with formatter
+    "PLR0913", # Too many arguments (sometimes necessary)
+    "S104",    # Binding to all interfaces
+    "S608",    # SQL injection (false positives with ORMs)
     "W291",    # Trailing whitespace
 ]
 fixable = ["ALL"]
 pydocstyle = { convention = "google" }
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
 
 [tool.ruff.lint.per-file-ignores]
 "**/wip*.py"   = ["ALL"]
@@ -88,19 +90,19 @@ docstring-code-line-length = 125
 include = ["src"]
 exclude = ["**/node_modules", "**/__pycache__", ".venv", ".git", "dist", "build", "_*", "wip*", "**/tests", "**/gen", "**/program/*", "**/*.ipynb", "**/wip*.py"]
 defineConstant = { DEBUG = true }
-typeCheckingMode = "standard"
+typeCheckingMode = "strict"
 pythonVersion = "3.13"
 pythonPlatform = "All"
+# Relaxations for strict mode
+reportUnknownMemberType = "warning"    # Too noisy for dynamic frameworks
+reportUnknownArgumentType = false      # Too noisy for dynamic frameworks
+reportUnusedCallResult = false         # Side-effect functions
+# Additional checks (explicit)
 reportMissingImports = "error"
-reportMissingTypeStubs = false
-reportMissingModuleSource = false
 reportUnknownParameterType = "warning"
-reportUnknownArgumentType = false
-reportUnknownMemberType = false
+reportUnknownArgumentType = "warning"
 reportMissingParameterType = "warning"
 reportUnnecessaryTypeIgnoreComment = "warning"
 reportUnnecessaryIsInstance = "warning"
-reportImportCycles = "warning"
-reportUnusedImport = "warning"
+reportImportCycles = "error"
 reportUnusedVariable = "warning"
-reportDuplicateImport = "warning"
