@@ -100,7 +100,6 @@ reportUnusedCallResult = false         # Side-effect functions
 # Additional checks (explicit)
 reportMissingImports = "error"
 reportUnknownParameterType = "warning"
-reportUnknownArgumentType = "warning"
 reportMissingParameterType = "warning"
 reportUnnecessaryTypeIgnoreComment = "warning"
 reportUnnecessaryIsInstance = "warning"
