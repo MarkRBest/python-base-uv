@@ -7,7 +7,9 @@ authors = [
     { name = "markrbest", email = "mark.r.best@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "loguru",
+]
 
 [project.scripts]
 python-base-uv = "python_base_uv.main:main"
@@ -16,14 +18,22 @@ python-base-uv = "python_base_uv.main:main"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
 [dependency-groups]
 dev = [
-    "pyrefly>=0.25.1",
+    "pyrefly",
+    "pyright",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-watcher",
     "ty",
-    "pytest>=8.4.1",
-    "pytest-asyncio>=1.1.0",
-    "pytest-watcher>=0.4.3",
-    "ruff>=0.12.5",
+    "ruff",
 ]
 
 [tool.ruff]
@@ -35,6 +45,9 @@ extend-select = ["E","W","F","I","B","C4","N","D","UP","S","ANN","ARG","ERA","IC
 ignore = ["ANN204", "C901","S608","D401","E501","D107","W291","RET503","D100","D101","D102","D103","D104","D105","S104","PD901"]
 fixable = ["ALL"]
 pydocstyle = { convention = "google" }
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
 
 [tool.ruff.lint.per-file-ignores]
 "**/wip*.py"   = ["ALL"]
