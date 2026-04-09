@@ -10,7 +10,7 @@ requires-python = ">=3.13"
 dependencies = []
 
 [project.scripts]
-python-base-uv = "python_base_uv:main"
+python-base-uv = "python_base_uv.main:main"
 
 [build-system]
 requires = ["hatchling"]
