@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 authors = [
-    { name = "idatsy", email = "stefan@ranvier.co.uk" }
+    { name = "markrbest", email = "mark.r.best@gmail.com" }
 ]
 requires-python = ">=3.13"
 dependencies = []
@@ -19,7 +19,7 @@ build-backend = "hatchling.build"
 [dependency-groups]
 dev = [
     "pyrefly>=0.25.1",
-    "pyright>=1.1.403",
+    "ty",
     "pytest>=8.4.1",
     "pytest-asyncio>=1.1.0",
     "pytest-watcher>=0.4.3",
@@ -62,31 +62,11 @@ line-ending = "auto"
 docstring-code-format = true
 docstring-code-line-length = 125
 
-[tool.pyright]
+[tool.ty.src]
 include = ["src"]
 exclude = ["**/node_modules", "**/__pycache__", ".venv", ".git", "dist", "build", "_*", "wip*", "**/tests", "**/gen", "**/program/*", "**/*.ipynb", "**/wip*.py"]
-defineConstant = { DEBUG = true }
-typeCheckingMode = "standard"
-pythonVersion = "3.13"
-pythonPlatform = "All"
-stubPath = "typings"
-reportMissingImports = "error"
-reportMissingTypeStubs = false
-reportMissingModuleSource = false
-reportUnknownParameterType = "warning"
-reportUnknownArgumentType = false
-reportUnknownMemberType = false
-reportMissingParameterType = "warning"
-reportUnnecessaryTypeIgnoreComment = "warning"
-reportUnnecessaryIsInstance = "warning"
-reportImportCycles = "warning"
-reportUnusedImport = "warning"
-reportUnusedVariable = "warning"
-reportDuplicateImport = "warning"
 
-[[tool.pyright.overrides]]
-pattern = ".venv/**"
-reportUnknownParameterType = "none"
-reportUnknownArgumentType = "none"
-reportUnknownMemberType = "none"
-reportMissingParameterType = "none"
+[tool.ty.environment]
+python-version = "3.13"
+python-platform = "all"
+extra-paths = ["typings"]
